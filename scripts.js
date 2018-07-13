@@ -9,41 +9,74 @@ container.setAttribute('class', 'container');
 app.appendChild(logo);
 app.appendChild(container);
 
-var request = new XMLHttpRequest();
-request.open('GET', 'https://ghibliapi.herokuapp.com/films', true);
-request.onload = function () {
+const card = document.createElement('div');
+card.setAttribute('class', 'card');
+const h1 = document.createElement('h1');
+h1.setAttribute('class', 'cardheader');
 
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response);
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      const card = document.createElement('div');
-      card.setAttribute('class', 'card');
-     	card.setAttribute('id', movie.id);
+const cpuP = document.createElement('p');
+cpuP.setAttribute('class', 'cpuP');
+const memP = document.createElement('p');
+memP.setAttribute('class', 'memP');
 
-      const h1 = document.createElement('h1');
-      h1.textContent = movie.title;
+container.appendChild(card);
+card.appendChild(h1);
+card.appendChild(cpuP);
+card.appendChild(memP);
 
-      const p = document.createElement('p');
-      movie.description = movie.description.substring(0, 300);
-      p.textContent = `${movie.description}...`;
+container.appendChild(card)
 
-      const i = document.createElement('p');
-	i.textContent = `${movie.id}`;
-	
+function pollFunc(fn, timeout, interval) {
+    	var startTime = (new Date()).getTime();
+    	interval = interval || 1000,
+    	canPoll = true;
 
-      container.appendChild(card);
-      card.appendChild(h1);
-      card.appendChild(p);
-      card.appendChild(i);
-
-
-    });
-  } else {
-    const errorMessage = document.createElement('marquee');
-    errorMessage.textContent = `Gah, it's not working!`;
-    app.appendChild(errorMessage);
-  }
+    	(function p() {
+        	canPoll = ((new Date).getTime() - startTime ) <= timeout;
+        	if (!fn() && canPoll)  { // ensures the function exucutes
+            		setTimeout(p, interval);
+        	}
+    	})();
 }
 
-request.send();
+function sendHeartBeat(params) {
+
+	console.log("hello");
+
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://192.168.2.20:6502/v1/api/data/status', true);
+	request.onload = function () {
+		if (request.status >= 200 && request.status < 400) {
+
+			// Begin2d accessing JSON data here
+  			var reading = JSON.parse(this.response);
+
+			const cardheader = document.getElementsByClassName('cardheader')[0];
+			cardheader.textContent = `Reading ${(new Date()).getTime()}`;
+		
+			const cpuP = document.getElementsByClassName('cpuP')[0];
+			cpuP.textContent = `CPU: ${reading.CPU}`;
+		
+			const memP = document.getElementsByClassName('memP')[0];
+			memP.textContent = `Memory: ${reading.Memory}`;
+
+		} else {
+			//handle errors
+    			const errorMessage = document.createElement('marquee');
+    			errorMessage.textContent = `Gah, it's not working!`;
+    			app.appendChild(errorMessage);
+		}
+
+	}
+
+	request.send();
+
+	//some additional info for ending things
+	receivedData = false;
+	if (receivedData) {
+        	// no need to execute further
+        	return true; // or false, change the IIFE inside condition accordingly.
+    	}
+}
+
+pollFunc(sendHeartBeat, 60000, 10);
