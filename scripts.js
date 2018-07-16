@@ -39,12 +39,23 @@ function pollFunc(fn, timeout, interval) {
     	})();
 }
 
+function infinitePollFunc(fn, interval) {
+    	interval = interval || 1000,
+    	canPoll = true;
+
+    	(function p() {
+        	if (!fn())  { // ensures the function exucutes
+            		setTimeout(p, interval);
+        	}
+    	})();
+}
+
 function sendHeartBeat(params) {
 
 	console.log("hello");
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'http://192.168.2.20:6502/v1/api/data/status', true);
+	request.open('GET', 'http://192.168.3.210:6502/v1/api/data/status', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 
@@ -79,4 +90,6 @@ function sendHeartBeat(params) {
     	}
 }
 
-pollFunc(sendHeartBeat, 60000, 10);
+//pollFunc(sendHeartBeat, 60000, 10);
+infinitePollFunc(sendHeartBeat, 10);
+
