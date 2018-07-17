@@ -1,5 +1,3 @@
-//
-
 const app = document.getElementById('root');
 
 const logo = document.createElement('img');
@@ -21,10 +19,44 @@ cpuP.setAttribute('class', 'cpuP');
 const memP = document.createElement('p');
 memP.setAttribute('class', 'memP');
 
+var xmlns = "http://www.w3.org/2000/svg";
+const svgWindow = document.createElementNS (xmlns, "svg"); 
+svgWindow.setAttribute('width', '500px');
+svgWindow.setAttribute('height', '300px');
+svgWindow.setAttribute('version', '1.1');
+svgWindow.setAttribute('class', 'graph');
+
+const cpuR = document.createElementNS(xmlns, 'rect');
+cpuR.setAttribute('width', '300px');
+cpuR.setAttribute('height', '50px');
+cpuR.setAttribute('x', '10px');
+cpuR.setAttribute('y', '0px');
+cpuR.setAttribute('style', 'fill:blue;stroke:pink;stroke-width:5;opacity:0.5');
+cpuR.setAttribute('class', 'cpuRect');
+svgWindow.appendChild(cpuR);
+
+const cpuAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate'); 
+cpuAnim.setAttribute('class', 'cpuAnim');
+cpuR.appendChild(cpuAnim);
+
+const memR = document.createElementNS(xmlns, 'rect');
+memR.setAttribute('width', '300px');
+memR.setAttribute('height', '50px');
+memR.setAttribute('x', '10px');
+memR.setAttribute('y', '75px');
+memR.setAttribute('style', 'fill:red;stroke:pink;stroke-width:5;opacity:0.5');
+memR.setAttribute('class', 'memRect');
+svgWindow.appendChild(memR);
+
+const memAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate'); 
+memAnim.setAttribute('class', 'memAnim');
+memR.appendChild(memAnim);
+
 container.appendChild(card);
 card.appendChild(h1);
 card.appendChild(cpuP);
 card.appendChild(memP);
+card.appendChild(svgWindow);
 
 container.appendChild(card)
 
@@ -54,24 +86,46 @@ function infinitePollFunc(fn, interval) {
 
 function sendHeartBeat(params) {
 
-	console.log("hello");
-
 	var request = new XMLHttpRequest();
-	request.open('GET', 'http://192.168.3.210:6502/v1/api/data/status', true);
+	request.open('GET', 'http://192.168.2.22:6502/v1/api/data/status', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 
-			// Begin2d accessing JSON data here
+
+			// Note:  mixing DOM updates and <p> updates seems to cause
+			// flashing
+			// Accessing JSON data here
   			var reading = JSON.parse(this.response);
 
 			const cardheader = document.getElementsByClassName('cardheader')[0];
-			cardheader.textContent = `Reading ${(new Date()).getTime()}`;
+			//cardheader.textContent = `Reading ${(new Date()).getTime()}`;
 		
 			const cpuP = document.getElementsByClassName('cpuP')[0];
-			cpuP.textContent = `CPU: ${reading.CPU}`;
+			//cpuP.textContent = `CPU: ${reading.CPU}`;
+
+			const cpuAnim = document.getElementsByClassName('cpuAnim')[0];
+			cpuAnim.setAttribute('attributeName', 'width'); //avoid issues with heights being negative and upper left corner origin
+			cpuAnim.setAttribute('dur', '100ms');
+			cpuAnim.setAttribute('from', cpuAnim.getAttribute('to'));
+			cpuAnim.setAttribute('to', `${reading.CPU*100}%`);
+			cpuAnim.setAttribute('fill', 'freeze'); //needed to avoid flashing
+			cpuAnim.setAttribute('repeatCount', 0);
+			cpuAnim.beginElement();
+			//cpuRect.setAttribute('height', `${reading.CPU*150}px`);
 		
 			const memP = document.getElementsByClassName('memP')[0];
-			memP.textContent = `Memory: ${reading.Memory}`;
+			//memP.textContent = `Memory: ${reading.Memory}`;
+
+			const memAnim = document.getElementsByClassName('memAnim')[0]; 
+			memAnim.setAttribute('attributeName', 'width');
+			memAnim.setAttribute('dur', '100ms');
+			memAnim.setAttribute('from', memAnim.getAttribute('to'));
+			memAnim.setAttribute('to', `${reading.Memory*100}%`);
+			memAnim.setAttribute('fill', 'freeze');
+			memAnim.setAttribute('repeatCount', 0);
+			memAnim.beginElement();
+			//memRect.setAttribute('height', `${reading.Memory*150}px`);
+			//note 
 
 		} else {
 			//handle errors
@@ -93,4 +147,4 @@ function sendHeartBeat(params) {
 }
 
 //pollFunc(sendHeartBeat, 60000, 10);
-infinitePollFunc(sendHeartBeat, 10);
+infinitePollFunc(sendHeartBeat, 200);
