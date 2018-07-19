@@ -1,3 +1,10 @@
+var protobuf = require('google-protobuf')
+var stat = require('./status_pb')
+
+update = stat.StatusUpdate();
+update.cpu = 10;
+update.mem = 2;
+
 const app = document.getElementById('root');
 
 const logo = document.createElement('img');
@@ -87,7 +94,7 @@ function infinitePollFunc(fn, interval) {
 function sendHeartBeat(params) {
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'http://192.168.2.22:6502/v1/api/data/status', true);
+	request.open('GET', 'http://192.168.3.211:6502/v1/api/data/status', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 
