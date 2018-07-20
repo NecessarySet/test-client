@@ -11,11 +11,6 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
-goog.exportSymbol('proto.status.AddressBook', null, global);
-goog.exportSymbol('proto.status.Person', null, global);
-goog.exportSymbol('proto.status.Person.PhoneNumber', null, global);
-goog.exportSymbol('proto.status.Person.PhoneType', null, global);
 goog.exportSymbol('proto.status.StatusUpdate', null, global);
 
 /**
@@ -64,10 +59,9 @@ proto.status.StatusUpdate.prototype.toObject = function(opt_includeInstance) {
  */
 proto.status.StatusUpdate.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sampleTime: (f = msg.getSampleTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    info: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    cpu: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
-    mem: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
+    info: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    cpu: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    mem: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
   };
 
   if (includeInstance) {
@@ -105,19 +99,14 @@ proto.status.StatusUpdate.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
-      msg.setSampleTime(value);
-      break;
-    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setInfo(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setCpu(value);
       break;
-    case 4:
+    case 3:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setMem(value);
       break;
@@ -150,32 +139,24 @@ proto.status.StatusUpdate.prototype.serializeBinary = function() {
  */
 proto.status.StatusUpdate.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getSampleTime();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    );
-  }
   f = message.getInfo();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      1,
       f
     );
   }
   f = message.getCpu();
   if (f !== 0.0) {
     writer.writeFloat(
-      3,
+      2,
       f
     );
   }
   f = message.getMem();
   if (f !== 0.0) {
     writer.writeFloat(
-      4,
+      3,
       f
     );
   }
@@ -183,716 +164,47 @@ proto.status.StatusUpdate.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional google.protobuf.Timestamp sample_time = 1;
- * @return {?proto.google.protobuf.Timestamp}
- */
-proto.status.StatusUpdate.prototype.getSampleTime = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 1));
-};
-
-
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
-proto.status.StatusUpdate.prototype.setSampleTime = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.status.StatusUpdate.prototype.clearSampleTime = function() {
-  this.setSampleTime(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.status.StatusUpdate.prototype.hasSampleTime = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional string info = 2;
+ * optional string info = 1;
  * @return {string}
  */
 proto.status.StatusUpdate.prototype.getInfo = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
 proto.status.StatusUpdate.prototype.setInfo = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional float cpu = 3;
+ * optional float cpu = 2;
  * @return {number}
  */
 proto.status.StatusUpdate.prototype.getCpu = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
 };
 
 
 /** @param {number} value */
 proto.status.StatusUpdate.prototype.setCpu = function(value) {
-  jspb.Message.setProto3FloatField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
 /**
- * optional float mem = 4;
+ * optional float mem = 3;
  * @return {number}
  */
 proto.status.StatusUpdate.prototype.getMem = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
 };
 
 
 /** @param {number} value */
 proto.status.StatusUpdate.prototype.setMem = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.status.Person = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.status.Person.repeatedFields_, null);
-};
-goog.inherits(proto.status.Person, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.status.Person.displayName = 'proto.status.Person';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.status.Person.repeatedFields_ = [4];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.status.Person.prototype.toObject = function(opt_includeInstance) {
-  return proto.status.Person.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.status.Person} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.Person.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    id: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    email: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    phonesList: jspb.Message.toObjectList(msg.getPhonesList(),
-    proto.status.Person.PhoneNumber.toObject, includeInstance),
-    lastUpdated: (f = msg.getLastUpdated()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.status.Person}
- */
-proto.status.Person.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.status.Person;
-  return proto.status.Person.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.status.Person} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.status.Person}
- */
-proto.status.Person.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setId(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setEmail(value);
-      break;
-    case 4:
-      var value = new proto.status.Person.PhoneNumber;
-      reader.readMessage(value,proto.status.Person.PhoneNumber.deserializeBinaryFromReader);
-      msg.addPhones(value);
-      break;
-    case 5:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
-      msg.setLastUpdated(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.status.Person.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.status.Person.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.status.Person} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.Person.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getId();
-  if (f !== 0) {
-    writer.writeInt32(
-      2,
-      f
-    );
-  }
-  f = message.getEmail();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getPhonesList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      4,
-      f,
-      proto.status.Person.PhoneNumber.serializeBinaryToWriter
-    );
-  }
-  f = message.getLastUpdated();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * @enum {number}
- */
-proto.status.Person.PhoneType = {
-  MOBILE: 0,
-  HOME: 1,
-  WORK: 2
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.status.Person.PhoneNumber = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.status.Person.PhoneNumber, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.status.Person.PhoneNumber.displayName = 'proto.status.Person.PhoneNumber';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.status.Person.PhoneNumber.prototype.toObject = function(opt_includeInstance) {
-  return proto.status.Person.PhoneNumber.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.status.Person.PhoneNumber} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.Person.PhoneNumber.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    number: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.status.Person.PhoneNumber}
- */
-proto.status.Person.PhoneNumber.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.status.Person.PhoneNumber;
-  return proto.status.Person.PhoneNumber.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.status.Person.PhoneNumber} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.status.Person.PhoneNumber}
- */
-proto.status.Person.PhoneNumber.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setNumber(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.status.Person.PhoneType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.status.Person.PhoneNumber.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.status.Person.PhoneNumber.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.status.Person.PhoneNumber} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.Person.PhoneNumber.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getNumber();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string number = 1;
- * @return {string}
- */
-proto.status.Person.PhoneNumber.prototype.getNumber = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.status.Person.PhoneNumber.prototype.setNumber = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional PhoneType type = 2;
- * @return {!proto.status.Person.PhoneType}
- */
-proto.status.Person.PhoneNumber.prototype.getType = function() {
-  return /** @type {!proto.status.Person.PhoneType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {!proto.status.Person.PhoneType} value */
-proto.status.Person.PhoneNumber.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
-};
-
-
-/**
- * optional string name = 1;
- * @return {string}
- */
-proto.status.Person.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.status.Person.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional int32 id = 2;
- * @return {number}
- */
-proto.status.Person.prototype.getId = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {number} value */
-proto.status.Person.prototype.setId = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional string email = 3;
- * @return {string}
- */
-proto.status.Person.prototype.getEmail = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.status.Person.prototype.setEmail = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * repeated PhoneNumber phones = 4;
- * @return {!Array.<!proto.status.Person.PhoneNumber>}
- */
-proto.status.Person.prototype.getPhonesList = function() {
-  return /** @type{!Array.<!proto.status.Person.PhoneNumber>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.status.Person.PhoneNumber, 4));
-};
-
-
-/** @param {!Array.<!proto.status.Person.PhoneNumber>} value */
-proto.status.Person.prototype.setPhonesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 4, value);
-};
-
-
-/**
- * @param {!proto.status.Person.PhoneNumber=} opt_value
- * @param {number=} opt_index
- * @return {!proto.status.Person.PhoneNumber}
- */
-proto.status.Person.prototype.addPhones = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.status.Person.PhoneNumber, opt_index);
-};
-
-
-proto.status.Person.prototype.clearPhonesList = function() {
-  this.setPhonesList([]);
-};
-
-
-/**
- * optional google.protobuf.Timestamp last_updated = 5;
- * @return {?proto.google.protobuf.Timestamp}
- */
-proto.status.Person.prototype.getLastUpdated = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 5));
-};
-
-
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
-proto.status.Person.prototype.setLastUpdated = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.status.Person.prototype.clearLastUpdated = function() {
-  this.setLastUpdated(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.status.Person.prototype.hasLastUpdated = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.status.AddressBook = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.status.AddressBook.repeatedFields_, null);
-};
-goog.inherits(proto.status.AddressBook, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.status.AddressBook.displayName = 'proto.status.AddressBook';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.status.AddressBook.repeatedFields_ = [1];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.status.AddressBook.prototype.toObject = function(opt_includeInstance) {
-  return proto.status.AddressBook.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.status.AddressBook} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.AddressBook.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    peopleList: jspb.Message.toObjectList(msg.getPeopleList(),
-    proto.status.Person.toObject, includeInstance)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.status.AddressBook}
- */
-proto.status.AddressBook.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.status.AddressBook;
-  return proto.status.AddressBook.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.status.AddressBook} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.status.AddressBook}
- */
-proto.status.AddressBook.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.status.Person;
-      reader.readMessage(value,proto.status.Person.deserializeBinaryFromReader);
-      msg.addPeople(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.status.AddressBook.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.status.AddressBook.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.status.AddressBook} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.status.AddressBook.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPeopleList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      1,
-      f,
-      proto.status.Person.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * repeated Person people = 1;
- * @return {!Array.<!proto.status.Person>}
- */
-proto.status.AddressBook.prototype.getPeopleList = function() {
-  return /** @type{!Array.<!proto.status.Person>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.status.Person, 1));
-};
-
-
-/** @param {!Array.<!proto.status.Person>} value */
-proto.status.AddressBook.prototype.setPeopleList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
-};
-
-
-/**
- * @param {!proto.status.Person=} opt_value
- * @param {number=} opt_index
- * @return {!proto.status.Person}
- */
-proto.status.AddressBook.prototype.addPeople = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.status.Person, opt_index);
-};
-
-
-proto.status.AddressBook.prototype.clearPeopleList = function() {
-  this.setPeopleList([]);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
