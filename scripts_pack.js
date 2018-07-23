@@ -473,12 +473,9 @@ function sendHeartBeat(params) {
 	var request = new XMLHttpRequest();
 	request.open('GET', 'http://192.168.3.211:6502/v1/api/data/status', true);
 
-	//remove this line if dealing with JSON`
-	try {
-		request.responseType = "arraybuffer";
-	}catch(e) {
-		console.log("not supported");
-	}
+	//remove this line if dealing with JSON 
+	//note value is case sensitive
+	request.responseType = "arraybuffer";
 
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
@@ -487,10 +484,10 @@ function sendHeartBeat(params) {
 			// flashing
 			// Accessing JSON data here
 			var bytes = new Uint8Array(this.response);
-			console.log(bytes.byteLength);
 			
 			if(!bytes) {
-			  return;
+				console.log("problem!");
+				return; 
 			}
 			const update = stat.StatusUpdate.deserializeBinary(bytes);
 			const cpu = update.getCpu();

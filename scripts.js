@@ -173,4 +173,4 @@ function sendHeartBeat(params) {
 }
 
 //pollFunc(sendHeartBeat, 60000, 10);
-infinitePollFunc(sendHeartBeat, 200);
+infinitePollFunc(sendHeartBeat, 150);
