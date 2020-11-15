@@ -101,7 +101,7 @@ function infinitePollFunc(fn, interval) {
 function sendHeartBeat(params) {
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'http://192.168.3.211:6502/v1/api/data/status', true);
+	request.open('GET', 'http://192.168.2.19:6502/v1/api/data/status', true);
 
 	//remove this line if dealing with JSON 
 	//note value is case sensitive

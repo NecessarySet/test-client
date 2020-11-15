@@ -471,7 +471,7 @@ function infinitePollFunc(fn, interval) {
 function sendHeartBeat(params) {
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'http://192.168.3.211:6502/v1/api/data/status', true);
+	request.open('GET', 'http://192.168.2.19:6502/v1/api/data/status', true);
 
 	//remove this line if dealing with JSON 
 	//note value is case sensitive
@@ -543,7 +543,7 @@ function sendHeartBeat(params) {
 }
 
 //pollFunc(sendHeartBeat, 60000, 10);
-infinitePollFunc(sendHeartBeat, 200);
+infinitePollFunc(sendHeartBeat, 150);
 
 },{"./status_pb":3,"google-protobuf":1}],3:[function(require,module,exports){
 /**
@@ -2735,4 +2735,4 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}]},{},[2]);
+},{}]},{},[2,3]);
